@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -27,9 +28,6 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login()
-            ->colors([
-                'primary' => Color::Amber,
-            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -56,6 +54,21 @@ class AppPanelProvider extends PanelProvider
             ])
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-            ]);
+            ])
+            ->colors([
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::hex('#00c49a'),
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
+            ])
+            ->font(
+                'Inter',
+                url: asset('css/font.css'),
+                provider: LocalFontProvider::class,
+            )
+            ->brandName('_SIKeuanganMasjid')
+            ->favicon(asset('favicon.png'));
     }
 }

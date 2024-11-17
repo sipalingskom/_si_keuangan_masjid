@@ -10,6 +10,14 @@ class EditPengguna extends EditRecord
 {
     protected static string $resource = PenggunaResource::class;
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            'Pengguna',
+            'Ubah Penggna'
+        ];
+    }
+
     protected function getRedirectUrl(): ?string
     {
         return $this->getResource()::getUrl('index');

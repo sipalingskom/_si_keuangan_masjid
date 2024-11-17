@@ -3,8 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PenggunaResource\Pages;
-use App\Filament\Resources\PenggunaResource\RelationManagers;
-use App\Models\Pengguna;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,7 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PenggunaResource extends Resource
 {
@@ -22,7 +19,9 @@ class PenggunaResource extends Resource
 
     protected static ?string $navigationGroup = 'Halaman';
 
-    protected static ?string $navigationLabel = 'Data Pengguna';
+    protected static ?string $navigationLabel = 'Pengguna';
+
+    protected static ?string $modelLabel = 'Pengguna';
 
     public static function form(Form $form): Form
     {
@@ -31,29 +30,43 @@ class PenggunaResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label('Nama Lengkap')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
+                            ->label('Alamat Email')
                             ->email()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('password')
+                            ->label('Kata Sandi')
                             ->password()
                             ->revealable()
                             ->dehydrated(fn($state) => filled($state))
                             ->required(fn(string $context): bool => $context === 'create')
                             ->maxLength(255),
                         Forms\Components\Select::make('roles')
-                            ->relationship('roles', 'name')
+                            ->label('Peran')
+                            ->relationship(
+                                name: 'roles',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn(Builder $query) => $query->where('name', '!=', 'super_admin'),
+                            )
+                            ->multiple()
+                            ->required()
                             ->preload(),
                     ])
-                    ->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                if (auth()->user()->hasRole('super_admin')) {
+                    return $query->where('id', '!=', auth()->user()->id);
+                }
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->formatStateUsing(fn($state) => ucwords($state))
@@ -68,7 +81,9 @@ class PenggunaResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn() => auth()->user()->hasRole('1')),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
