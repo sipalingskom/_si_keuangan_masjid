@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function infaqs()
+    {
+        return $this->hasMany(Infaq::class, 'bendahara_id', 'id');
+    }
 }

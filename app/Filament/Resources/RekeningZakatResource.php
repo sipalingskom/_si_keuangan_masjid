@@ -22,15 +22,18 @@ class RekeningZakatResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('no_rek')
-                    ->label('Nomor Rekening')
-                    ->unique(table: RekeningZakat::class, column: 'no_rek', ignoreRecord: true)
-                    ->required()
-                    ->maxLength(25),
-                Forms\Components\TextInput::make('jenis_bank')
-                    ->label('Nama Bank')
-                    ->required()
-                    ->maxLength(20),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('no_rek')
+                            ->label('Nomor Rekening')
+                            ->unique(table: RekeningZakat::class, column: 'no_rek', ignoreRecord: true)
+                            ->required()
+                            ->maxLength(25),
+                        Forms\Components\TextInput::make('jenis_bank')
+                            ->label('Nama Bank')
+                            ->required()
+                            ->maxLength(20),
+                    ])
             ]);
     }
 

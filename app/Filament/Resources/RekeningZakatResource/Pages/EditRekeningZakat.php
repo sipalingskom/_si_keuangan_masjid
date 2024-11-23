@@ -10,6 +10,18 @@ class EditRekeningZakat extends EditRecord
 {
     protected static string $resource = RekeningZakatResource::class;
 
+    protected function getRedirectUrl(): ?string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            'Rekening Zakat',
+            'Ubah Rekening Zakat'
+        ];
+    }
     protected function getHeaderActions(): array
     {
         return [
