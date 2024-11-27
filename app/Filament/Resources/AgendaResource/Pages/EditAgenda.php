@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\InfaqResource\Pages;
+namespace App\Filament\Resources\AgendaResource\Pages;
 
-use App\Filament\Resources\InfaqResource;
+use App\Filament\Resources\AgendaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditInfaq extends EditRecord
+class EditAgenda extends EditRecord
 {
-    protected static string $resource = InfaqResource::class;
+    protected static string $resource = AgendaResource::class;
+
 
     protected function getRedirectUrl(): ?string
     {
@@ -18,8 +19,8 @@ class EditInfaq extends EditRecord
     public function getBreadcrumbs(): array
     {
         return [
-            'Infaq',
-            'Ubah Infaq'
+            'Agenda',
+            'Ubah Agenda'
         ];
     }
 }

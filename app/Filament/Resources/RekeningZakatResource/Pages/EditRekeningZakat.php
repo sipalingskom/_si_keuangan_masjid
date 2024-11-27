@@ -22,10 +22,4 @@ class EditRekeningZakat extends EditRecord
             'Ubah Rekening Zakat'
         ];
     }
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
 }

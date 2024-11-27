@@ -13,7 +13,13 @@ class ListInfaqs extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Infaq'),
         ];
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return ['Infaq'];
     }
 }

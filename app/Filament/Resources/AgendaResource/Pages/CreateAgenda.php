@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\InfaqResource\Pages;
+namespace App\Filament\Resources\AgendaResource\Pages;
 
-use App\Filament\Resources\InfaqResource;
+use App\Filament\Resources\AgendaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
-class CreateInfaq extends CreateRecord
+class CreateAgenda extends CreateRecord
 {
-    protected static string $resource = InfaqResource::class;
+    protected static string $resource = AgendaResource::class;
 
     protected function getRedirectUrl(): string
     {
@@ -19,13 +19,13 @@ class CreateInfaq extends CreateRecord
     public function getBreadcrumbs(): array
     {
         return [
-            'Infaq',
-            'Tambah Infaq'
+            'Agenda',
+            'Tambah Agenda'
         ];
     }
 
     public function getHeading(): string|Htmlable
     {
-        return "Tambah Infaq";
+        return "Tambah Agenda";
     }
 }
