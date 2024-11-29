@@ -37,9 +37,10 @@ class AgendaResource extends Resource
                             ->default(auth()->user()->id)
                             // ->readOnly()
                             ->required(),
-                        Forms\Components\TextInput::make('ketua')
+                        Forms\Components\TextInput::make('Author')
                             ->default(auth()->user()->name)
                             ->disabled()
+                            ->hidden(fn(string $operation): bool => $operation === 'edit')
                             ->required(),
                         Forms\Components\Select::make('kategori_agenda_id')
                             ->label('Kategori Agenda')
@@ -57,12 +58,14 @@ class AgendaResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama_kegiatan')
+                    ->formatStateUsing(fn($state) => ucwords($state))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ketua_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('ketua.name')
+                    ->label('Author')
+                    ->formatStateUsing(fn($state) => ucwords($state))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kategori_agenda_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('kategoriAgenda.kategori')
+                    ->formatStateUsing(fn($state) => ucwords($state))
                     ->sortable(),
             ])
             ->filters([
@@ -70,6 +73,7 @@ class AgendaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

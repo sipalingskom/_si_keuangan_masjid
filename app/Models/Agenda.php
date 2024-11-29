@@ -17,7 +17,7 @@ class Agenda extends Model
         'kategori_agenda_id',
     ];
 
-    public function user()
+    public function ketua()
     {
         return $this->belongsTo(User::class, 'ketua_id', 'id');
     }
