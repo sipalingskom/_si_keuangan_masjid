@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RekeningZakat;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,11 +20,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $data = User::create([
-            'name' => 'Superadmin',
-            'email' => 'sadmin@app.masjid',
-            'password' => bcrypt('superadmin'),
+        $data = RekeningZakat::create([
+            'nama' => 'masjid ar rahman',
+            'no_rek' => '002123456789',
+            'jenis_bank' => 'bri',
         ]);
-        $data->assignRole('super_admin');
+        // $data->assignRole('super_admin');
     }
 }

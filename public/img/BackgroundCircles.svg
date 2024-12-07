@@ -1,0 +1,40 @@
+<svg width="1011" height="957" viewBox="0 0 1011 957" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.3" filter="url(#filter0_f_44_2)">
+<circle cx="271.067" cy="883.067" r="44.9995" transform="rotate(154.288 271.067 883.067)" fill="url(#paint0_diamond_44_2)"/>
+</g>
+<g opacity="0.3" filter="url(#filter1_f_44_2)">
+<circle cx="159.715" cy="159.715" r="111.298" transform="rotate(36.6119 159.715 159.715)" fill="url(#paint1_diamond_44_2)"/>
+</g>
+<g opacity="0.4" filter="url(#filter2_f_44_2)">
+<circle cx="967.114" cy="871.114" r="23.309" transform="rotate(154.288 967.114 871.114)" fill="url(#paint2_diamond_44_2)"/>
+</g>
+<defs>
+<filter id="filter0_f_44_2" x="175.908" y="787.908" width="190.318" height="190.318" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="25.0746" result="effect1_foregroundBlur_44_2"/>
+</filter>
+<filter id="filter1_f_44_2" x="0.711296" y="0.711296" width="318.007" height="318.007" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="23.8495" result="effect1_foregroundBlur_44_2"/>
+</filter>
+<filter id="filter2_f_44_2" x="923.799" y="827.799" width="86.6286" height="86.6287" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur_44_2"/>
+</filter>
+<radialGradient id="paint0_diamond_44_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(286.656 854.942) rotate(102.035) scale(74.7675)">
+<stop stop-color="#17B3A9"/>
+<stop offset="1" stop-color="#0945DF"/>
+</radialGradient>
+<radialGradient id="paint1_diamond_44_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(204.234 100.171) rotate(104.606) scale(176.547)">
+<stop stop-color="#E7CE4A"/>
+<stop offset="1" stop-color="#E64467"/>
+</radialGradient>
+<radialGradient id="paint2_diamond_44_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(975.188 856.545) rotate(102.035) scale(38.7282)">
+<stop stop-color="#EBD79D"/>
+<stop offset="1" stop-color="#E0AF75"/>
+</radialGradient>
+</defs>
+</svg>

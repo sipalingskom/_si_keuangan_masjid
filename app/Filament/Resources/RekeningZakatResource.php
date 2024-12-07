@@ -24,6 +24,10 @@ class RekeningZakatResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
+                        Forms\Components\TextInput::make('nama')
+                            ->label('Nama Pemilik Bank')
+                            ->required()
+                            ->maxLength(70),
                         Forms\Components\TextInput::make('no_rek')
                             ->label('Nomor Rekening')
                             ->unique(table: RekeningZakat::class, column: 'no_rek', ignoreRecord: true)
@@ -41,6 +45,10 @@ class RekeningZakatResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('nama')
+                    ->label('Nama Pemilik')
+                    ->formatStateUsing(fn($state) => strtoupper($state))
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('no_rek')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jenis_bank')
@@ -52,12 +60,9 @@ class RekeningZakatResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rekening_zakat', function (Blueprint $table) {
             $table->id();
+            $table->string('nama', 70);
             $table->string('no_rek', 25)->unique();
             $table->string('jenis_bank', 20);
             $table->timestamps();

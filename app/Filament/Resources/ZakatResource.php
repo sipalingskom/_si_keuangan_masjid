@@ -2,26 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InfaqResource\Pages;
-use App\Filament\Resources\InfaqResource\RelationManagers;
-use App\Models\Infaq;
+use App\Filament\Resources\ZakatResource\Pages;
+use App\Filament\Resources\ZakatResource\RelationManagers;
+use App\Models\Zakat;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\View\Components\Modal;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use SebastianBergmann\CodeCoverage\Report\Html\Colors;
 
-use function Pest\Laravel\options;
-
-class InfaqResource extends Resource
+class ZakatResource extends Resource
 {
-    protected static ?string $model = Infaq::class;
+    protected static ?string $model = Zakat::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
@@ -36,11 +30,11 @@ class InfaqResource extends Resource
                         Forms\Components\TextInput::make('nama')
                             ->required()
                             ->maxLength(70),
-                        Forms\Components\Select::make('kategori')
-                            ->options([
-                                'masjid' => 'Masjid',
-                                'sosial' => 'Sosial',
-                            ])
+                        Forms\Components\Select::make('kategori_id')
+                            ->relationship(name: 'kategoriZakat', titleAttribute: 'nama_zakat')
+                            ->required(),
+                        Forms\Components\Hidden::make('petugas_id')
+                            ->default(auth()->user()->id)
                             ->required(),
                         Forms\Components\Select::make('type')
                             ->options([
@@ -57,10 +51,6 @@ class InfaqResource extends Resource
                         Forms\Components\Textarea::make('keterangan')
                             ->required()
                             ->columnSpanFull(),
-                        Forms\Components\Hidden::make('bendahara_id')
-                            ->default(auth()->user()->id)
-                            // ->readOnly()
-                            ->required(),
                         Forms\Components\FileUpload::make('bukti')
                             ->moveFiles()
                             ->uploadingMessage('Uploading attachment...')
@@ -80,14 +70,16 @@ class InfaqResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->formatStateUsing(fn($state) => ucwords($state))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kategori')
-                    ->formatStateUsing(fn($state) => ucwords($state))
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'masjid' => 'warning',
-                        'sosial' => 'primary'
+                Tables\Columns\TextColumn::make('kategori_id')
+                    ->state(function (Zakat $record) {
+                        return ucwords($record->kategoriZakat->nama_zakat);
                     })
-                    ->searchable(),
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('petugas_id')
+                    ->state(function (Zakat $record) {
+                        return ucwords($record->petugas->name);
+                    })
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('type')
                     ->formatStateUsing(fn($state) => ucwords($state))
                     ->badge()
@@ -102,11 +94,6 @@ class InfaqResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal')
                     ->date('d M Y')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('bendahara_id')
-                    ->state(function (Infaq $record) {
-                        return ucwords($record->user->name);
-                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
@@ -133,7 +120,7 @@ class InfaqResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('show_image')
                     ->label('Show')
-                    ->url(fn(Infaq $infaq): string => route('infaq.show', ['infaq' => $infaq->bukti]))
+                    ->url(fn(Zakat $zakat): string => route('infaq.show', ['infaq' => $zakat->bukti]))
                     ->color('warning')
                     ->icon('heroicon-m-photo')
                     ->openUrlInNewTab(),
@@ -157,9 +144,9 @@ class InfaqResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInfaqs::route('/'),
-            'create' => Pages\CreateInfaq::route('/create'),
-            'edit' => Pages\EditInfaq::route('/{record}/edit'),
+            'index' => Pages\ListZakats::route('/'),
+            'create' => Pages\CreateZakat::route('/create'),
+            'edit' => Pages\EditZakat::route('/{record}/edit'),
         ];
     }
 }

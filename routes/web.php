@@ -1,12 +1,15 @@
 <?php
 
+use App\Livewire;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// Open New Tab Image Infaq
+/* Open New Tab Image Infaq */
+
 Route::get('/storage/{infaq}', function ($infaq) {
     return $infaq;
 })->name('infaq.show');
+
+
+/* Landing Page */
+Route::get('/', Livewire\LandingPage::class);

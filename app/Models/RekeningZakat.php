@@ -11,6 +11,7 @@ class RekeningZakat extends Model
 
     protected $table = 'rekening_zakat';
     protected $fillable = [
+        'nama',
         'no_rek',
         'jenis_bank'
     ];

@@ -5,25 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Infaq extends Model
+class Zakat extends Model
 {
     use HasFactory;
 
-    protected $table = 'infaq';
+    protected $table = 'zakat';
     protected $fillable = [
         'nama',
-        'kategori',
+        'kategori_id',
+        'petugas_id',
         'type',
         'jumlah',
         'tanggal',
         'keterangan',
-        'bendahara_id',
         'bukti',
         'status',
     ];
 
-    public function user()
+    public function petugas()
     {
-        return $this->belongsTo(User::class, 'bendahara_id', 'id');
+        return $this->belongsTo(User::class, 'petugas_id', 'id');
+    }
+
+    public function kategoriZakat()
+    {
+        return $this->belongsTo(KategoriZakat::class, 'kategori_id', 'id');
     }
 }

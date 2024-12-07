@@ -1,3 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Croissant+One&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lexend:wght@100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
+
+@layer base {
+    * {
+        /* font-family: "Lexend", sans-serif !important; */
+        font-family: "DM Sans", sans-serif;
+        scroll-behavior: smooth;
+    }
+}
+
+@layer components {
+    .fi-logo {
+        font-family: "Croissant One", serif !important;
+    }
+
+    .fi-ta-text-item-label,
+    .fi-badge,
+    .fi-pagination-overview,
+    .fi-input-wrp-label,
+    .fi-select-input {
+        font-weight: 600 !important;
+    }
+}

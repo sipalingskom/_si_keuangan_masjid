@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('infaq', function (Blueprint $table) {
+        Schema::create('zakat', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 70);
-            $table->enum('kategori', ['masjid', 'sosial']);
+            $table->foreignId('kategori_id')->references('id')->on('kategori_zakat')->cascadeOnUpdate();
+            $table->foreignId('petugas_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->enum('type', ['pemasukan', 'pengeluaran'])->default('pemasukan');
             $table->double('jumlah');
             $table->date('tanggal');
             $table->text('keterangan');
-            $table->foreignId('bendahara_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->string('bukti');
             $table->enum('status', ['0', '1', '2']);
             $table->timestamps();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('infaqs');
+        Schema::dropIfExists('zakats');
     }
 };
