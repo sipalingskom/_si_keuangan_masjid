@@ -95,16 +95,17 @@
                 <h2 class="mb-6 text-2xl font-bold text-gray-900">Rekening <span class="text-primary">Masjid</span></h2>
             </div>
 
-            <div class="w-full text-white card bg-gradient-to-r from-primary to-[#7EEDF4]">
-                <div class="flex justify-between py-6">
+            <div class="flex flex-col w-full gap-3 lg:flex-row">
+                @foreach ($rekeningZakat as $rekZakat)
+                <div class="w-full text-white card bg-gradient-to-r from-primary to-[#7EEDF4]">
                     <div class="flex justify-center card-body">
                         <h5 class="uppercase font-medium text-sm mb-2.5">Bank Penerima Infaq dan Zakat</h5>
-                        <p class="text-2xl font-bold">BRI - 1234678</p>
-                        <p class="text-xl font-semibold">Saptarino</p>
+                        <p class="text-2xl font-bold">{{ strtoupper($rekZakat->jenis_bank) }} - {{ $rekZakat->no_rek }}
+                        </p>
+                        <p class="text-xl font-semibold">{{ ucwords($rekZakat->nama) }}</p>
                     </div>
-                    <img src="{{ asset('img/undraw_credit_card_re_blml.svg') }}" alt=""
-                        class="hidden px-6 w-52 md:inline" />
                 </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -118,11 +119,11 @@
                     <div>
                         <div class="flex justify-center card-body">
                             <h5 class="uppercase font-medium text-sm mb-1.5">Nomor Telepon atau Whatsapp (WA)</h5>
-                            <p class="text-2xl font-bold">0812-3546-7890</p>
+                            <p class="text-2xl font-bold">{{ $setting ?? "no_telp" }}</p>
                         </div>
                         <div class="flex justify-center card-body">
                             <h5 class="uppercase font-medium text-sm mb-1.5">Email</h5>
-                            <p class="text-2xl font-bold">Sadmin@app.masjid</p>
+                            <p class="text-2xl font-bold">{{ $setting ?? "email" }}</p>
                         </div>
                     </div>
                     <img src="{{ asset('img/undraw_contact_us_re_4qqt.svg') }}" alt=""
@@ -139,12 +140,10 @@
             _SIKeuangan<span class="font-bold">Masjid</span>
         </h2>
         <p class="w-full mx-auto mb-8 text-sm text-gray-100 md:w-1/2 lg:w-1/3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore totam, eos nesciunt similique, eveniet
-            quos repellat doloribus aut iusto eum dignissimos illum perferendis odio nemo maxime odit ducimus itaque
-            quam.
+            {{ ucwords($setting) ?? "alamat" }}
         </p>
-        <small class="font-semibold text-gray-100">Copyright © {{ date('Y') }} - Sistem Informasi Keuangan
-            Masjid.</small>
+        <small class="text-gray-100"><span class="font-semibold">Copyright © {{ date('Y') }}</span> - <span
+                class="text-xs font-extralight fi-logo">Sistem Informasi Keuangan Masjid.</span></small>
     </footer>
     {{-- End Footer --}}
 
