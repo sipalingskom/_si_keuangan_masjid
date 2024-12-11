@@ -23,6 +23,8 @@ class PenggunaResource extends Resource
 
     protected static ?string $modelLabel = 'Pengguna';
 
+    protected static ?int $navigationSort = 0;
+
     public static function form(Form $form): Form
     {
         return $form

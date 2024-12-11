@@ -16,7 +16,7 @@ class RekeningZakatResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
-    protected static ?string $navigationGroup = 'Halaman';
+    protected static ?string $navigationGroup = 'Halaman Utama';
 
     public static function form(Form $form): Form
     {

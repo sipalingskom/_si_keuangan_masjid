@@ -5,7 +5,8 @@
         style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/img/david-rodrigo-kZ1zThg6G40-unsplash.jpg'); background-position: center; background-size: cover">
         <div class="text-center">
             <h2 class="mb-5 text-3xl no-underline text-primary fi-logo">
-                _SIKeuangan<span class="font-bold">Masjid</span>
+                {{-- _SIKeuangan<span class="font-bold">Masjid</span> --}}
+                {{ $setting ? ucwords($setting->nama_web) : "nama_web"}}
             </h2>
             <p class="w-full px-5 mx-auto text-white lg:w-3/5">Sistem Informasi Keuangan Masjid merupakan
                 sistem informasi yang digunakan untuk mengelola pemasukan dan pengeluaran masjid, mulai dari zakat serta
@@ -119,11 +120,11 @@
                     <div>
                         <div class="flex justify-center card-body">
                             <h5 class="uppercase font-medium text-sm mb-1.5">Nomor Telepon atau Whatsapp (WA)</h5>
-                            <p class="text-2xl font-bold">{{ $setting ?? "no_telp" }}</p>
+                            <p class="text-2xl font-bold">{{ $setting ? $setting->no_telp : "no_telp" }}</p>
                         </div>
                         <div class="flex justify-center card-body">
                             <h5 class="uppercase font-medium text-sm mb-1.5">Email</h5>
-                            <p class="text-2xl font-bold">{{ $setting ?? "email" }}</p>
+                            <p class="text-2xl font-bold">{{ $setting ? ucwords($setting->email) : "email" }}</p>
                         </div>
                     </div>
                     <img src="{{ asset('img/undraw_contact_us_re_4qqt.svg') }}" alt=""
@@ -137,10 +138,11 @@
     {{-- Footer --}}
     <footer class="px-6 pt-6 pb-4 text-center bg-gray-950">
         <h2 class="mb-3 text-2xl no-underline fi-logo text-primary">
-            _SIKeuangan<span class="font-bold">Masjid</span>
+            {{-- _SIKeuangan<span class="font-bold">Masjid</span> --}}
+            {{ $setting ? ucwords($setting->nama_web) : "nama_web"}}
         </h2>
         <p class="w-full mx-auto mb-8 text-sm text-gray-100 md:w-1/2 lg:w-1/3">
-            {{ ucwords($setting) ?? "alamat" }}
+            {{ $setting ? ucwords($setting->alamat) : "alamat"}}
         </p>
         <small class="text-gray-100"><span class="font-semibold">Copyright © {{ date('Y') }}</span> - <span
                 class="text-xs font-extralight fi-logo">Sistem Informasi Keuangan Masjid.</span></small>

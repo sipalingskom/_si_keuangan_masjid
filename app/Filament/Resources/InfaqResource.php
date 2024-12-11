@@ -25,7 +25,9 @@ class InfaqResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
-    protected static ?string $navigationGroup = 'Halaman';
+    protected static ?string $navigationGroup = 'Transaksi';
+
+    protected static ?int $navigationSort = -5;
 
     public static function form(Form $form): Form
     {
@@ -145,13 +147,6 @@ class InfaqResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

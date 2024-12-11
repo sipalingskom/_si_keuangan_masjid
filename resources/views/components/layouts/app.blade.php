@@ -23,7 +23,7 @@
 
 <body class="antialiased bg-body">
 
-    <x-navbar />
+    <livewire:navbar />
 
     {{ $slot }}
 
