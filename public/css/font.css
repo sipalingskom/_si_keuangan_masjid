@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Lexend:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Croissant+One&family=Lexend:wght@100..900&display=swap");
 
 * {
     font-family: "Lexend", sans-serif !important;
@@ -10,4 +10,8 @@
 
 .fi-sidebar-item-icon {
     width: 20px !important;
+}
+
+.fi-sidebar-nav {
+    background: #ffffff !important;
 }

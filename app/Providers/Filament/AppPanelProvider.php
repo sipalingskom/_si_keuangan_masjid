@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\Setting;
 use Dashboard;
 use EditProfile;
 use Filament\FontProviders\LocalFontProvider;
@@ -68,7 +69,15 @@ class AppPanelProvider extends PanelProvider
                 url: asset('css/font.css'),
                 provider: LocalFontProvider::class,
             )
-            ->brandName('_SIKeuanganMasjid')
-            ->favicon(asset('favicon.png'));
+            ->brandName(function () {
+                $setting = Setting::first();
+                if ($setting) {
+                    return $setting->nama_web;
+                } else {
+                    return config('app.name');
+                }
+            })
+            ->favicon(asset('favicon.png'))
+            ->darkMode(false);
     }
 }

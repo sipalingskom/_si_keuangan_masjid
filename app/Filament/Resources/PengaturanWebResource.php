@@ -38,7 +38,6 @@ class PengaturanWebResource extends Resource
                         Forms\Components\TextInput::make('no_telp')
                             ->label('Nomor Telepon atau Whatsapp')
                             ->required()
-                            ->numeric()
                             ->maxLength(14),
                         Forms\Components\TextInput::make('email')
                             ->label('Alamat Email')
