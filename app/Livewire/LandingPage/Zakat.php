@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\LandingPage;
 
-use App\Models\Zakat;
+use App\Models\Zakat as ModelsZakat;
+use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
@@ -12,9 +13,8 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 
-class ListZakat extends Component implements HasForms, HasTable
+class Zakat extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -22,13 +22,13 @@ class ListZakat extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Zakat::where('status', '1'))
+            ->query(ModelsZakat::where('status', '1'))
             ->columns([
                 TextColumn::make('nama')
                     ->formatStateUsing(fn($state) => ucwords($state))
                     ->searchable(),
                 TextColumn::make('kategori')
-                    ->state(function (Zakat $record) {
+                    ->state(function (ModelsZakat $record) {
                         return ucwords($record->kategoriZakat->nama_zakat);
                     })
                     ->searchable(),
@@ -54,11 +54,15 @@ class ListZakat extends Component implements HasForms, HasTable
                         'pemasukan' => 'Pemasukan',
                         'pengeluaran' => 'Pengeluaran',
                     ])
-            ], layout: FiltersLayout::AboveContent);
+            ]);
     }
 
-    public function render(): View
+    public function render()
     {
-        return view('livewire.list-zakat');
+        $pemasukanZakat = ModelsZakat::where('type', 'pemasukan')->pluck('jumlah')->toArray();
+        $pengeluaranZakat = ModelsZakat::where('type', 'pengeluaran')->pluck('jumlah')->toArray();
+        $totalZakat = array_sum($pemasukanZakat) - array_sum($pengeluaranZakat);
+
+        return view('livewire.landing-page.zakat', compact('pemasukanZakat', 'pengeluaranZakat', 'totalZakat'));
     }
 }

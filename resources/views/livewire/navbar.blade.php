@@ -11,8 +11,8 @@
                 <ul class="flex gap-6 p-0 text-sm text-white" id="nav-list">
                     <li><a href="#infaq">Infaq</a></li>
                     <li><a href="#zakat">Zakat</a></li>
+                    <li><a href="#agenda">Agenda</a></li>
                     <li><a href="#rekmasjid">Rek. Masjid</a></li>
-                    <li><a href="#">Agenda</a></li>
                     <li><a href="#kontak">Kontak</a></li>
                 </ul>
             </div>
@@ -28,8 +28,8 @@
                         aria-orientation="vertical" aria-labelledby="dropdown-default">
                         <li><a class="dropdown-item" href="#infaq">Infaq</a></li>
                         <li><a class="dropdown-item" href="#zakat">Zakat</a></li>
+                        <li><a class="dropdown-item" href="#agenda">Agenda</a></li>
                         <li><a class="dropdown-item" href="#rekmasjid">Rek. Masjid</a></li>
-                        <li><a class="dropdown-item" href="#">Agenda</a></li>
                         <li><a class="dropdown-item" href="#kontak">Kontak</a></li>
                     </ul>
                 </div>

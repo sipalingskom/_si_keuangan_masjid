@@ -73,7 +73,7 @@ class UserPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_pengguna');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**

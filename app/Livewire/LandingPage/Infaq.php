@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\LandingPage;
 
-use App\Models\Infaq;
+use App\Models\Infaq as ModelsInfaq;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class ListInfaq extends Component implements HasForms, HasTable
+class Infaq extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -22,7 +22,7 @@ class ListInfaq extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Infaq::where('status', '1'))
+            ->query(ModelsInfaq::where('status', '1'))
             ->columns([
                 TextColumn::make('nama')
                     ->formatStateUsing(fn($state) => ucwords($state))
@@ -57,11 +57,15 @@ class ListInfaq extends Component implements HasForms, HasTable
                         'pemasukan' => 'Pemasukan',
                         'pengeluaran' => 'Pengeluaran',
                     ])
-            ], layout: FiltersLayout::AboveContent);
+            ]);
     }
 
-    public function render(): View
+    public function render()
     {
-        return view('livewire.list-infaq');
+        $pemasukanInfaq = ModelsInfaq::where('type', 'pemasukan')->pluck('jumlah')->toArray();
+        $pengeluaranInfaq = ModelsInfaq::where('type', 'pengeluaran')->pluck('jumlah')->toArray();
+        $totalInfaq = array_sum($pemasukanInfaq) - array_sum($pengeluaranInfaq);
+
+        return view('livewire.landing-page.infaq', compact('pemasukanInfaq', 'pengeluaranInfaq', 'totalInfaq'));
     }
 }

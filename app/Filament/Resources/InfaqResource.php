@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use phpDocumentor\Reflection\Types\Null_;
 use SebastianBergmann\CodeCoverage\Report\Html\Colors;
 
 use function Pest\Laravel\options;
@@ -106,8 +107,15 @@ class InfaqResource extends Resource
                     ->date('d M Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('bendahara_id')
+                    ->label('ACC')
                     ->state(function (Infaq $record) {
-                        return ucwords($record->user->name);
+                        if ($record->bendahara_id) {
+                            return ucwords($record->user->name);
+                        } else {
+                            return '-';
+                        }
+                        // ($record->bendahara_id != null) ? ucwords($record->user->name) : '-';
+                        // return ucwords($record->user->name);
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
@@ -146,7 +154,8 @@ class InfaqResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('status', 'asc');
     }
 
     public static function getPages(): array

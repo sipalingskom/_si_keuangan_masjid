@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('agenda', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('waktu');
+            $table->dateTime('waktu_mulai');
+            $table->dateTime('waktu_selesai');
             $table->string('nama_kegiatan');
             $table->foreignId('ketua_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->foreignId('kategori_agenda_id')->references('id')->on('kategori_agenda')->cascadeOnUpdate();

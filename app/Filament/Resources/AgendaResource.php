@@ -30,7 +30,9 @@ class AgendaResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\DateTimePicker::make('waktu')
+                        Forms\Components\DateTimePicker::make('waktu_mulai')
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('waktu_selesai')
                             ->required(),
                         Forms\Components\TextInput::make('nama_kegiatan')
                             ->required()
@@ -42,7 +44,7 @@ class AgendaResource extends Resource
                         Forms\Components\TextInput::make('Author')
                             ->default(auth()->user()->name)
                             ->disabled()
-                            ->hidden(fn(string $operation): bool => $operation === 'edit')
+                            ->hidden(fn(string $operation): bool => $operation === 'edit' or 'view')
                             ->required(),
                         Forms\Components\Select::make('kategori_agenda_id')
                             ->label('Kategori Agenda')
@@ -56,7 +58,10 @@ class AgendaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('waktu')
+                Tables\Columns\TextColumn::make('waktu_mulai')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('waktu_selesai')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama_kegiatan')
@@ -84,18 +89,12 @@ class AgendaResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListAgendas::route('/'),
             'create' => Pages\CreateAgenda::route('/create'),
+            'view' => Pages\ViewAgenda::route('/{record}'),
             'edit' => Pages\EditAgenda::route('/{record}/edit'),
         ];
     }

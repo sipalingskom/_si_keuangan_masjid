@@ -23,21 +23,31 @@
 
 <body class="antialiased bg-body">
 
-    <livewire:navbar />
-
+    {{--
+    <livewire:navbar /> --}}
+    @livewire('navbar')
     {{ $slot }}
+
+    @livewire('notifications')
+
 
     @filamentScripts
     @vite('resources/js/app.js')
 
     <script type="module">
+        $(window).on('hashchange', function(e){
+            history.replaceState ("", document.title, e.originalEvent.oldURL);
+        });
+
         $(window).scroll(function(){
             if ($(this).scrollTop()) {
+                $('#backtotop').removeClass('hidden');
                 $('#navbar').addClass('bg-white');
                 $('#navbar').addClass('shadow-sm');
                 $('#navbar').addClass('py-3');
                 $('#nav-list').removeClass('text-white');
             } else {
+                $('#backtotop').addClass('hidden');
                 $('#navbar').removeClass('bg-white');
                 $('#navbar').removeClass('shadow-sm');
                 $('#navbar').removeClass('py-3');

@@ -14,6 +14,7 @@ use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ZakatResource extends Resource
 {
@@ -80,8 +81,13 @@ class ZakatResource extends Resource
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('petugas_id')
+                    ->label('ACC')
                     ->state(function (Zakat $record) {
-                        return ucwords($record->petugas->name);
+                        if ($record->petugas_id) {
+                            return ucwords($record->petugas->name);
+                        } else {
+                            return '-';
+                        }
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
@@ -132,11 +138,11 @@ class ZakatResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\ExportBulkAction::make(),
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('status', 'asc');
     }
 
     public static function getRelations(): array

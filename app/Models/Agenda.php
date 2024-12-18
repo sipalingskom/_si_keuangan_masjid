@@ -11,7 +11,8 @@ class Agenda extends Model
 
     protected $table = 'agenda';
     protected $fillable = [
-        'waktu',
+        'waktu_mulai',
+        'waktu_selesai',
         'nama_kegiatan',
         'ketua_id',
         'kategori_agenda_id',

@@ -55,7 +55,7 @@ class ZakatPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_zakat');
+        return $user->can('{{ DeleteAny }}');
     }
 
     /**

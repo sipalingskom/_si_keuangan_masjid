@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Infaq;
+use App\Models\Setting;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class InfaqPolicy
+class SettingPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class InfaqPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_infaq');
+        return $user->can('view_any_pengaturan::web');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Infaq $infaq): bool
+    public function view(User $user, Setting $setting): bool
     {
-        return $user->can('view_infaq');
+        return $user->can('view_pengaturan::web');
     }
 
     /**
@@ -31,23 +31,23 @@ class InfaqPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_infaq');
+        return $user->can('create_pengaturan::web');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Infaq $infaq): bool
+    public function update(User $user, Setting $setting): bool
     {
-        return $user->can('update_infaq');
+        return $user->can('update_pengaturan::web');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Infaq $infaq): bool
+    public function delete(User $user, Setting $setting): bool
     {
-        return $user->can('delete_infaq');
+        return $user->can('delete_pengaturan::web');
     }
 
     /**
@@ -61,7 +61,7 @@ class InfaqPolicy
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Infaq $infaq): bool
+    public function forceDelete(User $user, Setting $setting): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -77,7 +77,7 @@ class InfaqPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Infaq $infaq): bool
+    public function restore(User $user, Setting $setting): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -93,7 +93,7 @@ class InfaqPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Infaq $infaq): bool
+    public function replicate(User $user, Setting $setting): bool
     {
         return $user->can('{{ Replicate }}');
     }
