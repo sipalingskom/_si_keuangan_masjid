@@ -76,12 +76,23 @@ class InfaqResource extends Resource
                             // ->readOnly()
                             ->required(),
                         Forms\Components\FileUpload::make('bukti')
+                            ->disabledOn('edit')
+                            ->hiddenOn('edit')
                             ->moveFiles()
                             ->uploadingMessage('Uploading attachment...')
                             ->image()
                             ->required(),
                         Forms\Components\Hidden::make('status')
+                            ->disabledOn('edit')
                             ->default('1')
+                            ->required(),
+                        Forms\Components\Select::make('status')
+                            ->disabledOn('create')
+                            ->hiddenOn('create')
+                            ->options([
+                                '1' => 'Berhasil',
+                                '2' => 'Gagal',
+                            ])
                             ->required(),
                     ])
             ]);
