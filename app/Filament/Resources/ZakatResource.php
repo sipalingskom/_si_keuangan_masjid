@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Illuminate\Support\Str;
 
 class ZakatResource extends Resource
 {
@@ -32,9 +33,19 @@ class ZakatResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
+                        Forms\Components\TextInput::make('kode')
+                            ->required()
+                            ->default(fn() => Str::random(6))
+                            ->readOnly()
+                            ->maxLength(6),
                         Forms\Components\TextInput::make('nama')
                             ->required()
                             ->maxLength(70),
+                        Forms\Components\TextInput::make('wa')
+                            ->label('Nomor Whatsapp')
+                            ->required()
+                            ->placeholder('Rubah angka 0 diawal menjadi 62. Contoh 62813456XXXXX')
+                            ->maxLength(16),
                         Forms\Components\Select::make('kategori_id')
                             ->relationship(name: 'kategoriZakat', titleAttribute: 'nama_zakat')
                             ->required(),
@@ -72,8 +83,12 @@ class ZakatResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kode')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->formatStateUsing(fn($state) => ucwords($state))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('wa')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kategori_id')
                     ->state(function (Zakat $record) {

@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('zakat', function (Blueprint $table) {
             $table->id();
+            $table->string('kode', 6)->unique();
             $table->string('nama', 70);
+            $table->string('wa', 16)->nullable();
             $table->foreignId('kategori_id')->references('id')->on('kategori_zakat')->cascadeOnUpdate();
-            $table->foreignId('petugas_id')->references('id')->on('users')->cascadeOnUpdate();
+            $table->foreignId('petugas_id')->references('id')->on('users')->cascadeOnUpdate()->nullable();
             $table->enum('type', ['pemasukan', 'pengeluaran'])->default('pemasukan');
             $table->double('jumlah');
             $table->date('tanggal');

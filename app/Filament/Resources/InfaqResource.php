@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use phpDocumentor\Reflection\Types\Null_;
 use SebastianBergmann\CodeCoverage\Report\Html\Colors;
+use Illuminate\Support\Str;
 
 use function Pest\Laravel\options;
 
@@ -36,9 +37,19 @@ class InfaqResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
+                        Forms\Components\TextInput::make('kode')
+                            ->required()
+                            ->default(fn() => Str::random(6))
+                            ->readOnly()
+                            ->maxLength(6),
                         Forms\Components\TextInput::make('nama')
                             ->required()
                             ->maxLength(70),
+                        Forms\Components\TextInput::make('wa')
+                            ->label('Nomor Whatsapp')
+                            ->required()
+                            ->placeholder('Rubah angka 0 diawal menjadi 62. Contoh 62813456XXXXX')
+                            ->maxLength(16),
                         Forms\Components\Select::make('kategori')
                             ->options([
                                 'masjid' => 'Masjid',
@@ -80,8 +91,12 @@ class InfaqResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kode')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->formatStateUsing(fn($state) => ucwords($state))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('wa')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kategori')
                     ->formatStateUsing(fn($state) => ucwords($state))

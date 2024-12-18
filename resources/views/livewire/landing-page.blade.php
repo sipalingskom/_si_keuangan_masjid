@@ -1,27 +1,27 @@
 <main>
 
     {{-- Header Page --}}
-    <livewire:landing-page.header />
+    @livewire('landing-page.header')
     {{-- End Header Page --}}
 
     {{-- Infaq Page --}}
-    <livewire:landing-page.infaq />
+    @livewire('landing-page.infaq')
     {{-- End Infaq Page --}}
 
     {{-- Zakat Page --}}
-    <livewire:landing-page.zakat />
+    @livewire('landing-page.zakat')
     {{-- End Zakat Page --}}
 
     {{-- Agenda Page --}}
     <section id="agenda" class="px-5 xl:px-0">
         <div class="container py-24 mx-auto">
-            <livewire:agenda-full-calender />
+            @livewire('agenda-full-calender')
         </div>
     </section>
     {{-- End Agenda Page --}}
 
     {{-- Rekening Masjid Page --}}
-    <livewire:landing-page.rekening-masjid />
+    @livewire('landing-page.rekening-masjid')
     {{-- End Rekening Masjid Page --}}
 
     {{-- Kontak Page --}}

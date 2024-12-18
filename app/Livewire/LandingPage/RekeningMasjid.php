@@ -6,6 +6,7 @@ use App\Models\Infaq;
 use App\Models\KategoriZakat;
 use App\Models\RekeningZakat;
 use App\Models\Zakat;
+use App\Traits\SendMessageWA;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -21,10 +22,11 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class RekeningMasjid extends Component implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, SendMessageWA;
 
     public ?array $data = [];
 
@@ -41,6 +43,11 @@ class RekeningMasjid extends Component implements HasForms
                 TextInput::make('nama')
                     ->required()
                     ->maxLength(70),
+                TextInput::make('wa')
+                    ->label('Nomor Whatsapp')
+                    ->required()
+                    ->placeholder('Rubah angka 0 diawal menjadi 62. Contoh 62813456XXXXX')
+                    ->maxLength(16),
                 Select::make('kategori')
                     ->options([
                         'infaq' => 'Infaq',
@@ -76,10 +83,13 @@ class RekeningMasjid extends Component implements HasForms
 
     public function create(): void
     {
+        $kode = Str::random(6);
         $datas = [];
         if ($this->data['kategori'] == 'infaq') {
             $datas = Infaq::create([
+                'kode' => $kode,
                 'nama' => $this->data['nama'],
+                'wa' => $this->data['wa'],
                 'kategori' => $this->data['tipe_infaq'],
                 'type' => 'pemasukan',
                 'jumlah' => $this->data['jumlah'],
@@ -91,7 +101,9 @@ class RekeningMasjid extends Component implements HasForms
         }
         if ($this->data['kategori'] == 'zakat') {
             $datas = Zakat::create([
+                'kode' => $kode,
                 'nama' => $this->data['nama'],
+                'wa' => $this->data['wa'],
                 'kategori_id' => $this->data['tipe_zakat'],
                 'type' => 'pemasukan',
                 'jumlah' => $this->data['jumlah'],
@@ -103,6 +115,7 @@ class RekeningMasjid extends Component implements HasForms
         }
 
         if ($datas != []) {
+            $this->pushMessage($this->data['wa'], 'Bukti Transfer Berhasil Dikirim. Kode transaksi anda adalah ' . $kode . '. Silahkan cek untuk status transaksi.');
             $this->form->getState();
             Notification::make()
                 ->title('Bukti Transfer Berhasil Dikirim')

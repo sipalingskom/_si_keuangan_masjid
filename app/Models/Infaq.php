@@ -11,7 +11,9 @@ class Infaq extends Model
 
     protected $table = 'infaq';
     protected $fillable = [
+        'kode',
         'nama',
+        'wa',
         'kategori',
         'type',
         'jumlah',
