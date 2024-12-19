@@ -12,13 +12,13 @@ class ListZakats extends ListRecords
 {
     protected static string $resource = ZakatResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make()
-                ->label('Tambah Zakat'),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\CreateAction::make()
+    //             ->label('Tambah Zakat'),
+    //     ];
+    // }
 
     public function getBreadcrumbs(): array
     {

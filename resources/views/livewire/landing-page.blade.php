@@ -13,11 +13,7 @@
     {{-- End Zakat Page --}}
 
     {{-- Agenda Page --}}
-    <section id="agenda" class="px-5 xl:px-0">
-        <div class="container py-24 mx-auto">
-            @livewire('agenda-full-calender')
-        </div>
-    </section>
+    @livewire('agenda-full-calender')
     {{-- End Agenda Page --}}
 
     {{-- Rekening Masjid Page --}}

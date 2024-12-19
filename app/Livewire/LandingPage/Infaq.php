@@ -62,8 +62,8 @@ class Infaq extends Component implements HasForms, HasTable
 
     public function render()
     {
-        $pemasukanInfaq = ModelsInfaq::where('type', 'pemasukan')->pluck('jumlah')->toArray();
-        $pengeluaranInfaq = ModelsInfaq::where('type', 'pengeluaran')->pluck('jumlah')->toArray();
+        $pemasukanInfaq = ModelsInfaq::where('type', 'pemasukan')->where('status', '1')->pluck('jumlah')->toArray();
+        $pengeluaranInfaq = ModelsInfaq::where('type', 'pengeluaran')->where('status', '1')->pluck('jumlah')->toArray();
         $totalInfaq = array_sum($pemasukanInfaq) - array_sum($pengeluaranInfaq);
 
         return view('livewire.landing-page.infaq', compact('pemasukanInfaq', 'pengeluaranInfaq', 'totalInfaq'));

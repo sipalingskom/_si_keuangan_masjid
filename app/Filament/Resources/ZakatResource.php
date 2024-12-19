@@ -8,6 +8,7 @@ use App\Filament\Resources\ZakatResource\RelationManagers;
 use App\Models\Zakat;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ExportAction;
@@ -37,44 +38,29 @@ class ZakatResource extends Resource
                             ->required()
                             ->default(fn() => Str::random(6))
                             ->readOnly()
+                            ->disabledOn('edit')
                             ->maxLength(6),
                         Forms\Components\TextInput::make('nama')
+                            ->formatStateUsing(fn($state) => ucwords($state))
                             ->required()
+                            ->disabledOn('edit')
                             ->maxLength(70),
                         Forms\Components\TextInput::make('wa')
-                            ->label('Nomor Whatsapp')
-                            ->required()
-                            ->placeholder('Rubah angka 0 diawal menjadi 62. Contoh 62813456XXXXX')
-                            ->maxLength(16),
-                        Forms\Components\Select::make('kategori_id')
-                            ->relationship(name: 'kategoriZakat', titleAttribute: 'nama_zakat')
-                            ->required(),
-                        Forms\Components\Hidden::make('petugas_id')
-                            ->default(auth()->user()->id)
-                            ->required(),
-                        Forms\Components\Select::make('type')
+                            ->disabledOn('edit'),
+                        Forms\Components\Select::make('status')
+                            ->disabledOn('create')
+                            ->hiddenOn('create')
                             ->options([
-                                'pemasukan' => 'Pemasukan',
-                                'pengeluaran' => 'Pengeluaran',
+                                '1' => 'Berhasil',
+                                '2' => 'Gagal',
                             ])
-                            ->required(),
-                        Forms\Components\TextInput::make('jumlah')
-                            ->prefix('Rp')
                             ->required()
-                            ->numeric(),
-                        Forms\Components\DatePicker::make('tanggal')
-                            ->required(),
+                            ->live(),
                         Forms\Components\Textarea::make('keterangan')
-                            ->required()
-                            ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('bukti')
-                            ->moveFiles()
-                            ->uploadingMessage('Uploading attachment...')
-                            ->image()
-                            ->required(),
-                        Forms\Components\Hidden::make('status')
-                            ->default('1')
-                            ->required(),
+                            ->label('Keterangan Gagal')
+                            ->default('')
+                            ->visible(fn(Get $get): bool => $get('status') === '2')
+                            ->required(fn(Get $get): bool => $get('status') === '2'),
                     ])
             ]);
     }
@@ -149,7 +135,8 @@ class ZakatResource extends Resource
                     ->color('warning')
                     ->icon('heroicon-m-photo')
                     ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Konfirmasi'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -160,18 +147,11 @@ class ZakatResource extends Resource
             ->defaultSort('status', 'asc');
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListZakats::route('/'),
-            'create' => Pages\CreateZakat::route('/create'),
+            // 'create' => Pages\CreateZakat::route('/create'),
             'edit' => Pages\EditZakat::route('/{record}/edit'),
         ];
     }

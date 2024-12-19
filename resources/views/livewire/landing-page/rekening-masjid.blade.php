@@ -11,7 +11,7 @@
                 <div class="flex justify-center card-body">
                     <p class="text-lg font-black text-gray-900">{{ strtoupper($rekMasjid->jenis_bank) }}</p>
                     <p class="mb-2 text-xl font-black text-gray-900">{{ $rekMasjid->no_rek }}</p>
-                    <p class="font-medium text-[#71717A]">{{ ucwords($rekMasjid->nama) }}</p>
+                    <p class="font-bold text-sm text-[#71717A]">{{ ucwords($rekMasjid->nama) }}</p>
                 </div>
             </div>
             @endforeach

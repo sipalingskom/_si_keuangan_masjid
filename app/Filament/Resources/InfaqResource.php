@@ -7,6 +7,7 @@ use App\Filament\Resources\InfaqResource\RelationManagers;
 use App\Models\Infaq;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Support\View\Components\Modal;
 use Filament\Tables;
@@ -41,51 +42,15 @@ class InfaqResource extends Resource
                             ->required()
                             ->default(fn() => Str::random(6))
                             ->readOnly()
+                            ->disabledOn('edit')
                             ->maxLength(6),
                         Forms\Components\TextInput::make('nama')
+                            ->formatStateUsing(fn($state) => ucwords($state))
                             ->required()
+                            ->disabledOn('edit')
                             ->maxLength(70),
                         Forms\Components\TextInput::make('wa')
-                            ->label('Nomor Whatsapp')
-                            ->required()
-                            ->placeholder('Rubah angka 0 diawal menjadi 62. Contoh 62813456XXXXX')
-                            ->maxLength(16),
-                        Forms\Components\Select::make('kategori')
-                            ->options([
-                                'masjid' => 'Masjid',
-                                'sosial' => 'Sosial',
-                            ])
-                            ->required(),
-                        Forms\Components\Select::make('type')
-                            ->options([
-                                'pemasukan' => 'Pemasukan',
-                                'pengeluaran' => 'Pengeluaran',
-                            ])
-                            ->required(),
-                        Forms\Components\TextInput::make('jumlah')
-                            ->prefix('Rp')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\DatePicker::make('tanggal')
-                            ->required(),
-                        Forms\Components\Textarea::make('keterangan')
-                            ->required()
-                            ->columnSpanFull(),
-                        Forms\Components\Hidden::make('bendahara_id')
-                            ->default(auth()->user()->id)
-                            // ->readOnly()
-                            ->required(),
-                        Forms\Components\FileUpload::make('bukti')
-                            ->disabledOn('edit')
-                            ->hiddenOn('edit')
-                            ->moveFiles()
-                            ->uploadingMessage('Uploading attachment...')
-                            ->image()
-                            ->required(),
-                        Forms\Components\Hidden::make('status')
-                            ->disabledOn('edit')
-                            ->default('1')
-                            ->required(),
+                            ->disabledOn('edit'),
                         Forms\Components\Select::make('status')
                             ->disabledOn('create')
                             ->hiddenOn('create')
@@ -93,7 +58,13 @@ class InfaqResource extends Resource
                                 '1' => 'Berhasil',
                                 '2' => 'Gagal',
                             ])
-                            ->required(),
+                            ->required()
+                            ->live(),
+                        Forms\Components\Textarea::make('keterangan')
+                            ->label('Keterangan Gagal')
+                            ->default('')
+                            ->visible(fn(Get $get): bool => $get('status') === '2')
+                            ->required(fn(Get $get): bool => $get('status') === '2'),
                     ])
             ]);
     }
@@ -173,7 +144,8 @@ class InfaqResource extends Resource
                     ->color('warning')
                     ->icon('heroicon-m-photo')
                     ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Konfirmasi'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -188,7 +160,7 @@ class InfaqResource extends Resource
     {
         return [
             'index' => Pages\ListInfaqs::route('/'),
-            'create' => Pages\CreateInfaq::route('/create'),
+            // 'create' => Pages\CreateInfaq::route('/create'),
             'edit' => Pages\EditInfaq::route('/{record}/edit'),
         ];
     }

@@ -59,8 +59,8 @@ class Zakat extends Component implements HasForms, HasTable
 
     public function render()
     {
-        $pemasukanZakat = ModelsZakat::where('type', 'pemasukan')->pluck('jumlah')->toArray();
-        $pengeluaranZakat = ModelsZakat::where('type', 'pengeluaran')->pluck('jumlah')->toArray();
+        $pemasukanZakat = ModelsZakat::where('type', 'pemasukan')->where('status', '1')->pluck('jumlah')->toArray();
+        $pengeluaranZakat = ModelsZakat::where('type', 'pengeluaran')->where('status', '1')->pluck('jumlah')->toArray();
         $totalZakat = array_sum($pemasukanZakat) - array_sum($pengeluaranZakat);
 
         return view('livewire.landing-page.zakat', compact('pemasukanZakat', 'pengeluaranZakat', 'totalZakat'));

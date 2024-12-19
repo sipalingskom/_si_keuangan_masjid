@@ -115,12 +115,12 @@ class RekeningMasjid extends Component implements HasForms
         }
 
         if ($datas != []) {
-            $this->pushMessage($this->data['wa'], 'Bukti Transfer Berhasil Dikirim. Kode transaksi anda adalah ' . $kode . '. Silahkan cek untuk status transaksi.');
             $this->form->getState();
             Notification::make()
                 ->title('Bukti Transfer Berhasil Dikirim')
                 ->success()
                 ->send();
+            $this->pushMessage($this->data['wa'], 'Bukti Transfer Berhasil Dikirim. Kode transaksi anda adalah ' . $kode . '. Silahkan cek untuk status transaksi.');
             $this->form->fill();
         } else {
             Notification::make()
