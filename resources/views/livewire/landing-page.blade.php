@@ -21,18 +21,23 @@
     {{-- End Rekening Masjid Page --}}
 
     {{-- Kontak Page --}}
-    <section id="kontak" class="px-5 xl:px-0">
+    <section id="kontak" class="w-auto px-5 xl:px-0">
         <div class="container py-24 mx-auto">
-            <div class="w-full text-white card bg-gradient-to-r from-primary to-[#7EEDF4]">
+            @livewire('landing-page.cari-kode')
+            <div class="w-auto text-white card bg-gradient-to-r from-primary to-[#7EEDF4]">
                 <div class="flex justify-between py-6">
                     <div>
-                        <div class="flex justify-center card-body">
-                            <h5 class="uppercase font-medium text-sm mb-1.5">Nomor Telepon atau Whatsapp (WA)</h5>
-                            <p class="text-2xl font-bold">{{ $setting ? $setting->no_telp : "no_telp" }}</p>
+                        <div class="flex flex-wrap justify-center card-body">
+                            <h5 class="uppercase font-medium text-xs lg:text-sm mb-1.5">Whatsapp (WA)</h5>
+                            <p class="text-sm font-bold md:text-base lg:text-2xl">{{ $setting ? $setting->no_telp :
+                                "no_telp" }}
+                            </p>
                         </div>
-                        <div class="flex justify-center card-body">
-                            <h5 class="uppercase font-medium text-sm mb-1.5">Email</h5>
-                            <p class="text-2xl font-bold">{{ $setting ? ucwords($setting->email) : "email" }}</p>
+                        <div class="flex flex-wrap justify-center card-body">
+                            <h5 class="uppercase font-medium text-xs lg:text-sm mb-1.5">Email</h5>
+                            <p class="text-sm font-bold md:text-base lg:text-2xl">{{ $setting ? ucwords($setting->email)
+                                : "email"
+                                }}</p>
                         </div>
                     </div>
                     <img src="{{ asset('img/undraw_contact_us_re_4qqt.svg') }}" alt=""
@@ -67,5 +72,4 @@
         </a>
     </section>
     {{-- End Back To Top --}}
-
 </main>

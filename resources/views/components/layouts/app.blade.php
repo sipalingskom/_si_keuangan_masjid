@@ -19,6 +19,47 @@
 
     @filamentStyles
     @vite('resources/css/app.css')
+    <style>
+        .swal2-confirm.swal2-styled {
+            background-color: #13ADB7 !important;
+            border: #13ADB7 !important;
+        }
+
+        .fc-h-event {
+            background-color: #13ADB7 !important;
+            border: #13ADB7 !important;
+        }
+
+        .fc-toolbar-chunk .fc-toolbar-title#fc-dom-1 {
+            font-weight: 700 !important;
+            color: #13adb7 !important;
+            font-size: 22px !important;
+        }
+
+        .fc-toolbar-chunk .fc-today-button,
+        .fc-toolbar-chunk .fc-next-button,
+        .fc-toolbar-chunk .fc-prev-button {
+            background-color: #13ADB7;
+            border: #13ADB7;
+        }
+
+        .fc-toolbar-chunk .fc-today-button:hover {
+            background-color: #068993;
+            border: #068993;
+        }
+
+        .fc-toolbar-chunk .fc-today-button:disabled {
+            background-color: #39b4bc;
+            border: #39b4bc;
+        }
+
+        @media only screen and (max-width: 425px) {
+            .fc-header-toolbar.fc-toolbar {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body class="antialiased bg-body">

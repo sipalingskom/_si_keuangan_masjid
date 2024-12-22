@@ -4,7 +4,7 @@
         </h2>
         <p class="mb-6 text-[13px] font-medium uppercase text-gray-600">Pemasukan dan pengeluaran</p>
 
-        <div class="flex gap-3 mb-3">
+        <div class="flex flex-col gap-3 mb-3 lg:flex-row">
             <div class="w-full text-white card bg-primary">
                 <div class="flex justify-center card-body">
                     <h5 class="uppercase font-semibold text-sm mb-2.5">Total Infaq</h5>
