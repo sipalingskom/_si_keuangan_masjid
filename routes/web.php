@@ -13,3 +13,4 @@ Route::get('/storage/{infaq}', function ($infaq) {
 
 /* Landing Page */
 Route::get('/', Livewire\LandingPage::class);
+Route::post('/cari-kode', [Livewire\LandingPage\CariKode::class, 'show'])->name('cari-kode.show');

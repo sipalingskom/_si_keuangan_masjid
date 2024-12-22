@@ -20,6 +20,17 @@
     @filamentStyles
     @vite('resources/css/app.css')
     <style>
+        .swal2-input-label {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .swal2-input {
+            border: solid 1px #eaeaea;
+            margin: 10px 20px;
+            border-radius: 10px;
+        }
+
         .swal2-confirm.swal2-styled {
             background-color: #13ADB7 !important;
             border: #13ADB7 !important;

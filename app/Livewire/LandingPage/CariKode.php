@@ -9,6 +9,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class CariKode extends Component implements HasForms
@@ -35,24 +36,31 @@ class CariKode extends Component implements HasForms
             ])->statePath('data');
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $infaq = Infaq::where('kode', $this->data['kode'])->first();
-        $zakat = Zakat::where('kode', $this->data['kode'])->first();
+        $infaq = Infaq::where('kode', $request->kode)->first();
+        $zakat = Zakat::where('kode', $request->kode)->first();
 
         if ($infaq) {
             $datass = $infaq;
-            dd($datass);
-            return response()->json($datass);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Infaq',
+                'data'    => $datass
+            ]);
         } elseif ($zakat) {
             $datass = $zakat;
-            dd($datass);
-            return response()->json($datass);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Zakat',
+                'data'    => $datass
+            ]);
         } else {
-            Notification::make()
-                ->title('Kode Bukti Tranfer Tidak Ditemukan.')
-                ->danger()
-                ->send();
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak Ditemukan',
+                'data'    => 'Kode Bukti Tranfer Tidak Ditemukan',
+            ]);
         }
     }
 
