@@ -18,7 +18,8 @@
     </style>
 
     @filamentStyles
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css') --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-Bv8A6Fvd.css') }}">
     <style>
         .swal2-input-label {
             font-weight: bold;
@@ -84,7 +85,8 @@
 
 
     @filamentScripts
-    @vite('resources/js/app.js')
+    {{-- @vite('resources/js/app.js') --}}
+    <script src="{{ asset('build/assets/app-Dh1BrTWI.js') }}"></script>
 
     <script type="module">
         $(window).on('hashchange', function(e){
