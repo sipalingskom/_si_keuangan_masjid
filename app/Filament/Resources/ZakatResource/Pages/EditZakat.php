@@ -39,11 +39,7 @@ class EditZakat extends EditRecord
             $data['keterangan'] = 'Bukti transfer berhasil dikonfirmasi oleh admin.';
         }
 
-        $record->update([
-            'petugas_id' => $data['petugas_id'],
-            'keterangan' => $data['keterangan'],
-            'status' => $data['status'],
-        ]);
+        $record->update($data);
         $this->pushMessage($this->data['wa'], $data['keterangan']);
 
         return $record;

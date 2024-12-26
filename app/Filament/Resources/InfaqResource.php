@@ -50,10 +50,34 @@ class InfaqResource extends Resource
                             ->disabledOn('edit')
                             ->maxLength(70),
                         Forms\Components\TextInput::make('wa')
+                            ->required()
                             ->disabledOn('edit'),
+                        Forms\Components\Select::make('kategori')
+                            ->required()
+                            ->options([
+                                'masjid' => 'Masjid',
+                                'sosial' => 'Sosial',
+                            ]),
+                        Forms\Components\Select::make('type')
+                            ->required()
+                            ->options([
+                                'pemasukan' => 'pemasukan',
+                                'pengeluaran' => 'pengeluaran',
+                            ]),
+                        Forms\Components\TextInput::make('jumlah')
+                            ->required()
+                            ->numeric(),
+                            Forms\Components\DateTimePicker::make('tanggal')
+                            ->required(),
+                        Forms\Components\Hidden::make('bendahara_id')
+                            ->default(auth()->user()->id)
+                            ->disabledOn('edit')
+                            ->required(),
+                        Forms\Components\FileUpload::make('bukti')
+                            ->moveFiles()
+                            ->image()
+                            ->required(),
                         Forms\Components\Select::make('status')
-                            ->disabledOn('create')
-                            ->hiddenOn('create')
                             ->options([
                                 '1' => 'Berhasil',
                                 '2' => 'Gagal',
@@ -145,7 +169,7 @@ class InfaqResource extends Resource
                     ->icon('heroicon-m-photo')
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make()
-                    ->label('Konfirmasi'),
+                    ->label('Edit'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -160,7 +184,7 @@ class InfaqResource extends Resource
     {
         return [
             'index' => Pages\ListInfaqs::route('/'),
-            // 'create' => Pages\CreateInfaq::route('/create'),
+            'create' => Pages\CreateInfaq::route('/create'),
             'edit' => Pages\EditInfaq::route('/{record}/edit'),
         ];
     }

@@ -21,14 +21,14 @@ class EditInfaq extends EditRecord
 
     public function getHeading(): string|Htmlable
     {
-        return "Konfirmasi Infaq";
+        return "Ubah Infaq";
     }
 
     public function getBreadcrumbs(): array
     {
         return [
             'Infaq',
-            'Konfirmasi Infaq'
+            'Ubah Infaq'
         ];
     }
 
@@ -39,11 +39,7 @@ class EditInfaq extends EditRecord
             $data['keterangan'] = 'Bukti transfer berhasil dikonfirmasi oleh admin.';
         }
 
-        $record->update([
-            'bendahara_id' => $data['bendahara_id'],
-            'keterangan' => $data['keterangan'],
-            'status' => $data['status'],
-        ]);
+        $record->update($data);
         $this->pushMessage($this->data['wa'], $data['keterangan']);
 
         return $record;

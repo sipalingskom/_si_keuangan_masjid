@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Exports\ZakatExporter;
 use App\Filament\Resources\ZakatResource\Pages;
 use App\Filament\Resources\ZakatResource\RelationManagers;
+use App\Models\KategoriZakat;
 use App\Models\Zakat;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -30,38 +31,60 @@ class ZakatResource extends Resource
 
     public static function form(Form $form): Form
     {
+
+        $kategoriZakat = KategoriZakat::pluck('nama_zakat', 'id')->toArray();
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                    ->schema([
-                        Forms\Components\TextInput::make('kode')
-                            ->required()
-                            ->default(fn() => Str::random(6))
-                            ->readOnly()
-                            ->disabledOn('edit')
-                            ->maxLength(6),
-                        Forms\Components\TextInput::make('nama')
-                            ->formatStateUsing(fn($state) => ucwords($state))
-                            ->required()
-                            ->disabledOn('edit')
-                            ->maxLength(70),
-                        Forms\Components\TextInput::make('wa')
-                            ->disabledOn('edit'),
-                        Forms\Components\Select::make('status')
-                            ->disabledOn('create')
-                            ->hiddenOn('create')
-                            ->options([
-                                '1' => 'Berhasil',
-                                '2' => 'Gagal',
-                            ])
-                            ->required()
-                            ->live(),
-                        Forms\Components\Textarea::make('keterangan')
-                            ->label('Keterangan Gagal')
-                            ->default('')
-                            ->visible(fn(Get $get): bool => $get('status') === '2')
-                            ->required(fn(Get $get): bool => $get('status') === '2'),
-                    ])
+                ->schema([
+                    Forms\Components\TextInput::make('kode')
+                        ->required()
+                        ->default(fn() => Str::random(6))
+                        ->readOnly()
+                        ->disabledOn('edit')
+                        ->maxLength(6),
+                    Forms\Components\TextInput::make('nama')
+                        ->formatStateUsing(fn($state) => ucwords($state))
+                        ->required()
+                        ->disabledOn('edit')
+                        ->maxLength(70),
+                    Forms\Components\TextInput::make('wa')
+                        ->required()
+                        ->disabledOn('edit'),
+                    Forms\Components\Select::make('kategori_id')
+                        ->required()
+                        ->options($kategoriZakat),
+                    Forms\Components\Select::make('type')
+                        ->required()
+                        ->options([
+                            'pemasukan' => 'pemasukan',
+                            'pengeluaran' => 'pengeluaran',
+                        ]),
+                    Forms\Components\TextInput::make('jumlah')
+                        ->required()
+                        ->numeric(),
+                        Forms\Components\DateTimePicker::make('tanggal')
+                        ->required(),
+                    Forms\Components\Hidden::make('petugas_id')
+                        ->default(auth()->user()->id)
+                        ->disabledOn('edit'),
+                    Forms\Components\FileUpload::make('bukti')
+                        ->moveFiles()
+                        ->image()
+                        ->required(),
+                    Forms\Components\Select::make('status')
+                        ->options([
+                            '1' => 'Berhasil',
+                            '2' => 'Gagal',
+                        ])
+                        ->required()
+                        ->live(),
+                    Forms\Components\Textarea::make('keterangan')
+                        ->label('Keterangan Gagal')
+                        ->default('')
+                        ->visible(fn(Get $get): bool => $get('status') === '2')
+                        ->required(fn(Get $get): bool => $get('status') === '2'),
+                ])
             ]);
     }
 
@@ -136,7 +159,7 @@ class ZakatResource extends Resource
                     ->icon('heroicon-m-photo')
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make()
-                    ->label('Konfirmasi'),
+                    ->label('Edit'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
