@@ -174,7 +174,7 @@ class ZakatResource extends Resource
     {
         return [
             'index' => Pages\ListZakats::route('/'),
-            // 'create' => Pages\CreateZakat::route('/create'),
+            'create' => Pages\CreateZakat::route('/create'),
             'edit' => Pages\EditZakat::route('/{record}/edit'),
         ];
     }
