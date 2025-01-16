@@ -3,6 +3,9 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\LoginPage;
+use App\Filament\Widgets\DashboardAppOverview;
+use App\Filament\Widgets\DashboardInfaqOverview;
+use App\Filament\Widgets\DashboardZakatOverview;
 use App\Models\Setting;
 use Dashboard;
 use EditProfile;
@@ -40,7 +43,10 @@ class AppPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([])
+            ->widgets([
+                DashboardInfaqOverview::class,
+                DashboardZakatOverview::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
