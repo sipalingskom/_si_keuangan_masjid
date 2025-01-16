@@ -14,7 +14,7 @@ class ListAgendas extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('Tambah Agenda'),
+                ->label('Tambah Agenda')
         ];
     }
 

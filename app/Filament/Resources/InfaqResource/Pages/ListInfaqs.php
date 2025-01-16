@@ -17,6 +17,9 @@ class ListInfaqs extends ListRecords
         return [
             Actions\CreateAction::make()
                 ->label('Tambah Infaq'),
+            Actions\Action::make('edit')
+                ->label('Cetak PDF')
+                ->url(fn (): string => route('pdfreport.cetak', 'infaq'))
         ];
         // return [];
     }

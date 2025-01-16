@@ -17,6 +17,9 @@ class ListZakats extends ListRecords
         return [
             Actions\CreateAction::make()
                 ->label('Tambah Zakat'),
+            Actions\Action::make('edit')
+                ->label('Cetak PDF')
+                ->url(fn (): string => route('pdfreport.cetak', 'zakat'))
         ];
     }
 
